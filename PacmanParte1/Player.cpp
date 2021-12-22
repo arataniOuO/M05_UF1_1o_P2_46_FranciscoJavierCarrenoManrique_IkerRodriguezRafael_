@@ -11,7 +11,7 @@ Player::Player()
 
 }
 
-void Player::Input()
+void Player::Input() 
 {
     input = USER_INPUTS::NONE;
     if (ConsoleUtils::KeyPressed(VK_UP) || ConsoleUtils::KeyPressed('W'))
