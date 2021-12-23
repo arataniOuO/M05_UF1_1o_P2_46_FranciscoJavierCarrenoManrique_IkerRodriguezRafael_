@@ -1,104 +1,69 @@
 #include "Player.h"
 #include "Map.h"
 
-Player::Player() 
+Player::Player(COORD _spawn)
 {
+	spawn = _spawn;
+	position = _spawn;
+	direction = { 0,0 };
+}
 
-	int player_x;
-	int player_y;
-    
-    
+void Player::Update(Map* _map, USER_INPUTS input)
+{
+}
+
+void Player::Update(Map* _map, USER_INPUTS input)
+{
+    COORD newPosition = position;
+    switch (input)
+    {
+    case UP:
+        newPosition.Y--;
+        break;
+    case DOWN:
+        newPosition.Y++;
+        break;
+    case RIGHT:
+        newPosition.X++;
+        break;
+    case LEFT:
+        newPosition.X--;
+        break;
+    }
+    if (newPosition.X < 0)
+    {
+        newPosition.X = _map->Width - 1;
+    }
+    newPosition.X %= _map->Width;
+    if (newPosition.Y < 0)
+    {
+        newPosition.Y = _map->Height - 1;
+    }
+    newPosition.Y %= _map->Height;
+
+    switch (_map->GetTile(newPosition.X, newPosition.Y))
+    {
+    case Map::MAP_TILES::MAP_WALL:
+        newPosition.Y = position.Y;
+        newPosition.X = position.X;
+        break;
+    case Map::MAP_TILES::MAP_POINT:
+        _map -> points--;
+        points++;
+        _map->SetTile(newPosition.X, newPosition.Y, Map::MAP_TILES::MAP_EMPTY);
+        break;
+    /*case Map::MAP_TILES::MAP_POWERUP:
+        _map->SetTile(newPosition.X, newPosition.Y, Map::MAP_TILES::MAP_EMPTY);
+        break;*/
+    }
+
+    position = newPosition;
 
 }
 
-void Player::Input() 
+void Player::Draw()
 {
-    input = USER_INPUTS::NONE;
-    if (ConsoleUtils::KeyPressed(VK_UP) || ConsoleUtils::KeyPressed('W'))
-    {
-        input = USER_INPUTS::UP;
-    }
-    if (ConsoleUtils::KeyPressed(VK_DOWN) || ConsoleUtils::KeyPressed('S'))
-    {
-        input = USER_INPUTS::DOWN;
-    }
-    if (ConsoleUtils::KeyPressed(VK_RIGHT) || ConsoleUtils::KeyPressed('D'))
-    {
-        input = USER_INPUTS::RIGHT;
-    }
-    if (ConsoleUtils::KeyPressed(VK_LEFT) || ConsoleUtils::KeyPressed('A'))
-    {
-        input = USER_INPUTS::LEFT;
-    }
-    if (ConsoleUtils::KeyPressed(VK_ESCAPE) || ConsoleUtils::KeyPressed('Q'))
-    {
-        input = USER_INPUTS::QUIT;
-    }
-}
-
-void Player::Logic(int mapWidth, int mapHeight, Map map)
-{
-
-    if (win)
-    {
-        switch (input)
-        {
-        case QUIT:
-            run = false;
-            break;
-        }
-    }
-    else
-    {
-        int player_y_new = player_y;
-        int player_x_new = player_x;
-        switch (input)
-        {
-        case UP:
-            player_y_new--;
-            break;
-        case DOWN:
-            player_y_new++;
-            break;
-        case RIGHT:
-            player_x_new++;
-            break;
-        case LEFT:
-            player_x_new--;
-            break;
-        case QUIT:
-            run = false;
-            break;
-        }
-        if (player_x_new < 0)
-        {
-            player_x_new = mapWidth - 1;
-        }
-        player_x_new %= mapWidth;
-        if (player_y_new < 0)
-        {
-            player_y_new = mapHeight - 1;
-        }
-        player_y_new %= mapHeight;
-
-        switch (map.GetTile(player_x_new, player_y_new))
-        {
-        case Map::MAP_TILES::MAP_WALL:
-            player_y_new = player_y;
-            player_x_new = player_x;
-            break;
-        case Map::MAP_TILES::MAP_POINT:
-            map.points--;
-            player_points++;
-            map.SetTile(player_x_new, player_y_new, Map::MAP_TILES::MAP_EMPTY);
-            break;
-        }
-
-        player_y = player_y_new;
-        player_x = player_x_new;
-        if (map.points <= 0)
-        {
-            win = true;
-        }
-    }
+    ConsoleUtils::Console_SetPos(position);
+    ConsoleUtils::Console_SetColor(foreground, background);
+    std::cout << player_char;
 }

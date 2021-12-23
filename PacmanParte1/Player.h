@@ -3,25 +3,24 @@
 #include "ConsoleUtils.h"
 #include "Map.h"
 
+enum USER_INPUTS { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
 class Player
 {
-public:
-	enum USER_INPUTS { NONE, UP, DOWN, RIGHT, LEFT, QUIT };
+
+private:
+	COORD spawn;
+	COORD position;
+	COORD direction;
 	char player_char = 'O';
-	int player_x;
-	int player_y;
-	int player_points = 0;
-	USER_INPUTS input = USER_INPUTS::NONE;
-	bool run = true;
-	bool win = false;
+	int points = 0;
+	ConsoleUtils::CONSOLE_COLOR foreground = ConsoleUtils::CONSOLE_COLOR::YELLOW;
+	ConsoleUtils::CONSOLE_COLOR background = ConsoleUtils::CONSOLE_COLOR::BLACK;
 
 public:
-
-	Player();
-
-	void Input();
-
-	void Logic(int mapWidth, int mapHeight, Map _map);
+	
+	Player(COORD _spawn);
+	void Update(Map* _map, USER_INPUTS input);
+	void Draw();
 
 };
 
