@@ -1,10 +1,7 @@
 #include "Map.h"
+#include "ghost.h"
 #include "Player.h"
 #include "ConsoleUtils.h"
-
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
 
 /// <summary>
 /// Sets the needed variables
@@ -25,10 +22,8 @@ void Draw();
 
 
 Map pacman_map = Map();
+ghost ghost1 = ghost(); 
 Player player = Player(pacman_map.spawn_player);
-char player_char = 'O';
-int player_x = 1;
-int player_y = 1;
 int player_points = 0;
 USER_INPUTS input = USER_INPUTS::NONE;
 bool run = true;
@@ -48,10 +43,9 @@ int main()
 void Setup()
 {
     std::cout.sync_with_stdio(false);
-    player_x = pacman_map.spawn_player.X;
-    player_y = pacman_map.spawn_player.Y;
-    //player_x = pacman_map.spawn_player.X;
-    //player_y = pacman_map.spawn_player.Y;
+    srand(time(NULL));
+    /*player_x = pacman_map.spawn_player.X;
+    player_y = pacman_map.spawn_player.Y;*/
 }
 
 void Input()
@@ -96,6 +90,8 @@ void Logic()
         {
             win = true;
         }
+
+        ghost1.Move(&pacman_map);
     }
 }
 
@@ -107,6 +103,7 @@ void Draw()
     ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::DARK_YELLOW);
     std::cout << player.player_char;*/
     player.Draw();
+    ghost1.Draw();
     ConsoleUtils::Console_ClearCharacter({ 0,(short)pacman_map.Height });
     ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::CYAN);
     std::cout << "Puntuacion actual: " << player_points << " Puntuacion pendiente: " << pacman_map.points << std::endl;
