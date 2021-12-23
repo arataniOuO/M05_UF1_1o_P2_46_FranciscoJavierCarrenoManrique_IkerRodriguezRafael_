@@ -21,12 +21,18 @@
     <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ghost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
