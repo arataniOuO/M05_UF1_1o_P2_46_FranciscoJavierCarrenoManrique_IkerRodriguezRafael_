@@ -6,7 +6,7 @@ Map::Map()
 	points = 0;
 	const char* Map_Load[] = {
 		{"##  ####################################  ##"},
-		{"#..........................................#"},
+		{"#*........................................*#"},
 		{" .##################    ##################. "},
 		{" .#......................................#. "},
 		{"#.#.################ ## ################.#.#"},
@@ -14,7 +14,7 @@ Map::Map()
 		{"#.#.  # ############################ #  .#.#"},
 		{"#.#.# # #            ##              # #.#.#"},
 		{"#. .# # # ########## ## ############ # #. .#"},
-		{"#. .# #     E        ##        P     # #. .#"},
+		{"#* .# #     E        ##        P     # #. *#"},
 		{"#. .# # # ########## ## ############ # #. .#"},
 		{"#.#.# # #            ##              # #.#.#"},
 		{"#.#.  # ############################ #  .#.#"},
@@ -22,7 +22,7 @@ Map::Map()
 		{"#.#.################ ## ################.#.#"},
 		{" .#......................................#. "},
 		{" .##################    ##################. "},
-		{"#..........................................#"},
+		{"#*........................................*#"},
 		{"##  ####################################  ##"}
 	};
 	int x = 0;
@@ -49,6 +49,9 @@ Map::Map()
 			spawn_enemy.Y = y;
 			storedmap[i] = MAP_TILES::MAP_EMPTY;
 			break;
+		case MAP_TILES::MAP_POWERUP:
+			storedmap[i] = (MAP_TILES)tile;
+			break;
 		default:
 			storedmap[i] = (MAP_TILES)tile;
 			break;
@@ -57,9 +60,11 @@ Map::Map()
 	foregrounds[MAP_TILES::MAP_EMPTY] = ConsoleUtils::CONSOLE_COLOR::BLACK;
 	foregrounds[MAP_TILES::MAP_WALL] = ConsoleUtils::CONSOLE_COLOR::DARK_BLUE;
 	foregrounds[MAP_TILES::MAP_POINT] = ConsoleUtils::CONSOLE_COLOR::DARK_YELLOW;
+	foregrounds[MAP_TILES::MAP_POWERUP] = ConsoleUtils::CONSOLE_COLOR::MAGENTA;
 	backgrounds[MAP_TILES::MAP_EMPTY] = ConsoleUtils::CONSOLE_COLOR::BLACK;
 	backgrounds[MAP_TILES::MAP_WALL] = ConsoleUtils::CONSOLE_COLOR::DARK_BLUE;
 	backgrounds[MAP_TILES::MAP_POINT] = ConsoleUtils::CONSOLE_COLOR::BLACK;
+	backgrounds[MAP_TILES::MAP_POWERUP] = ConsoleUtils::CONSOLE_COLOR::BLACK;
 }
 
 Map::~Map()

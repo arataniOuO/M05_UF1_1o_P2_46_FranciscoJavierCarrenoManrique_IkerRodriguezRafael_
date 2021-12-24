@@ -8,11 +8,9 @@ Player::Player(COORD _spawn)
 	direction = { 0,0 };
 }
 
-void Player::Update(Map* _map, USER_INPUTS input)
-{
-}
 
-void Player::Update(Map* _map, USER_INPUTS input)
+
+void Player::Update(Map* _map, USER_INPUTS input, std::vector<ghost>* enemies)
 {
     COORD newPosition = position;
     switch (input)
@@ -52,9 +50,14 @@ void Player::Update(Map* _map, USER_INPUTS input)
         points++;
         _map->SetTile(newPosition.X, newPosition.Y, Map::MAP_TILES::MAP_EMPTY);
         break;
-    /*case Map::MAP_TILES::MAP_POWERUP:
+    case Map::MAP_TILES::MAP_POWERUP:
+        points += 25;
+        for (size_t i = 0; i < enemies->size(); i++)
+        {
+            (*enemies)[i].PowerUpPicked();
+        }
         _map->SetTile(newPosition.X, newPosition.Y, Map::MAP_TILES::MAP_EMPTY);
-        break;*/
+        break;
     }
 
     position = newPosition;
