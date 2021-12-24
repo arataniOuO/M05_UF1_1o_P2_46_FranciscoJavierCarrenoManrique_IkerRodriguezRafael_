@@ -18,7 +18,7 @@ private:
 	ConsoleUtils::CONSOLE_COLOR background = ConsoleUtils::CONSOLE_COLOR::BLACK;
 
 public:
-
+	int HP = 3;
 	int points = 0;
 	COORD position;
 	Player(COORD _spawn);

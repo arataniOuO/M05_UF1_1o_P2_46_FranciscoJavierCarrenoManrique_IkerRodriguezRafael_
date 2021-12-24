@@ -78,10 +78,12 @@ ghost::GHOST_STATE ghost::Update(Map* _map, COORD _player)
 	if (position.X == _player.X && position.Y == _player.Y) {
 		if (powerup_countdown <= TimeManager::getInstance().time) {
 			state = GHOST_STATE::GHOST_DEAD;
+			
 		}
 		else {
 			position = spawn;
 			state = GHOST_STATE::GHOST_KILLED;
+
 		}
 	}
 	if (powerup_countdown <= TimeManager::getInstance().time) {
@@ -93,7 +95,8 @@ ghost::GHOST_STATE ghost::Update(Map* _map, COORD _player)
 	return state;
 }
 
-
+//PARTE DESACTUALIZADA ARRIBA ESTA COMPLETA
+// 
 //void ghost::Move(Map* _map)
 //{
 //	GoRandom();

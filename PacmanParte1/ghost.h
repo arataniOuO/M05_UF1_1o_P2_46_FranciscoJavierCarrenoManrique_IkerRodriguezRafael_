@@ -24,6 +24,7 @@ private:
 	void GoRandom();
 
 public:
+	
 	enum GHOST_STATE { GHOST_NONE, GHOST_KILLED, GHOST_DEAD };
 	ghost();
 	ghost(COORD _spawn);

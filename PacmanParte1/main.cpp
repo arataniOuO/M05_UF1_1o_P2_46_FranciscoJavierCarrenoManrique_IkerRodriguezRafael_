@@ -28,6 +28,7 @@ Player player = Player(pacman_map.spawn_player);
 USER_INPUTS input = USER_INPUTS::NONE;
 bool run = true;
 bool win = false;
+bool lose = false;
 
 int main()
 {
@@ -80,7 +81,7 @@ void Input()
 
 void Logic()
 {
-    if (win)
+    if (win || lose)
     {
         switch (input)
         {
@@ -107,8 +108,18 @@ void Logic()
                 player.points += 50;
                 break;
             case ghost::GHOST_DEAD:
-                player.position.X = pacman_map.spawn_player.X;
-                player.position.Y = pacman_map.spawn_player.Y;
+                player.HP -= 1;
+                if (player.HP > 0)
+                {
+                    player.position.X = pacman_map.spawn_player.X;
+                    player.position.Y = pacman_map.spawn_player.Y;
+                }
+                else
+                {
+                    lose = true;
+                }
+
+                
                 break;
             }
         }
@@ -139,6 +150,11 @@ void Draw()
     {
         ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::GREEN);
         std::cout << "Has ganado!" << std::endl;
+    }
+    if (lose)
+    {
+        ConsoleUtils::Console_SetColor(ConsoleUtils::CONSOLE_COLOR::DARK_RED);
+        std::cout << "Has Perdido!" << std::endl;
     }
     std::cout << "Fotogramas: " << TimeManager::getInstance().frameCount << std::endl;
     std::cout << "Time: " << TimeManager::getInstance().time << std::endl;
